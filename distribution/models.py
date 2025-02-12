@@ -33,6 +33,8 @@ class Unit(models.Model):
 
     products = models.ManyToManyField(
         Product,
+        null=True,
+        blank=True,
         verbose_name='продукты'
     )
 
@@ -59,8 +61,11 @@ class Unit(models.Model):
         max_length=10,
         verbose_name='номер дома'
     )
+
     level = models.IntegerField(
         default=0,
+        null=True,
+        blank=True,
         verbose_name='уровень в иерархии'
     )
 
@@ -75,8 +80,12 @@ class Unit(models.Model):
     debt = models.DecimalField(
         max_digits=10,
         decimal_places=2,
+        null=True,
+        blank=True,
         verbose_name='долг перед поставщиком'
     )
+
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='время добавления')
 
     def __str__(self):
         return f'{self.name} {self.country} г.{self.city}({self.email})'

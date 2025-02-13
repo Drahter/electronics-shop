@@ -116,7 +116,10 @@ class Unit(models.Model):
         verbose_name='долг перед поставщиком'
     )
 
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name='время добавления')
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name='время добавления'
+    )
 
     def __str__(self):
         return f'{self.name} {self.country} г.{self.city}({self.email})'

@@ -4,6 +4,7 @@ from distribution.models import Unit
 
 
 class UnitSerializer(serializers.ModelSerializer):
+    """Сериализатор для модели узла сети"""
     class Meta:
         model = Unit
         fields = '__all__'

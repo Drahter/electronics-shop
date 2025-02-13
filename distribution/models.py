@@ -2,6 +2,7 @@ from django.db import models
 
 
 class Product(models.Model):
+    """Модель для товаров"""
     name = models.CharField(
         max_length=100,
         verbose_name='название'
@@ -26,6 +27,7 @@ class Product(models.Model):
 
 
 class Unit(models.Model):
+    """Модель для узла сети"""
     name = models.CharField(
         max_length=100,
         verbose_name='наименование'

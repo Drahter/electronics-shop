@@ -30,7 +30,16 @@ class UnitCreateAPIView(generics.CreateAPIView):
     serializer_class = UnitSerializer
 
     def perform_create(self, serializer):
-        """Проверка на наличие поставщика, присваивание корректного уровня"""
+        """
+        Проверка на наличие поставщика, присваивание корректного уровня
+
+        Если у объекта указан поставщик, то, отталкиваясь от его уровня,
+        выбирается следующий, вплоть до третьего, что означает, что объект
+        получает товар не напрямую с завода (уровень 0), а через другое звено.
+
+        Если поставщик не указывается, то присваивается уровень 0, что означает,
+        что звено является заводом.
+        """
         unit = serializer.save()
         if unit.supplier:
             supplier_level = unit.supplier.level
@@ -38,9 +47,9 @@ class UnitCreateAPIView(generics.CreateAPIView):
                 unit.level = 2
             else:
                 unit.level = supplier_level + 1
-
         else:
             unit.level = 0
+
         unit.save()
 
 
@@ -58,9 +67,9 @@ class UnitUpdateAPIView(generics.UpdateAPIView):
             if supplier_level > 1:
                 unit.level = 2
             unit.level = supplier_level + 1
-
         else:
             unit.level = 0
+
         unit.save()
 
 

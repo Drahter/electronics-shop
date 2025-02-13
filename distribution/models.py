@@ -33,7 +33,6 @@ class Unit(models.Model):
 
     products = models.ManyToManyField(
         Product,
-        null=True,
         blank=True,
         verbose_name='продукты'
     )
@@ -74,7 +73,8 @@ class Unit(models.Model):
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
-        related_name='поставщик'
+        related_name='supplied_units',
+        verbose_name='поставщик'
     )
 
     debt = models.DecimalField(

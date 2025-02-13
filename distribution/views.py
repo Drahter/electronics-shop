@@ -25,15 +25,16 @@ class UnitRetrieveAPIView(generics.RetrieveAPIView):
 
 
 class UnitCreateAPIView(generics.CreateAPIView):
-    """Контроллер для создания привычек"""
+    """Контроллер для создания филиала"""
     queryset = Unit.objects.all()
     serializer_class = UnitSerializer
 
     def perform_create(self, serializer):
+        """Проверка на наличие поставщика, присваивание корректного уровня"""
         unit = serializer.save()
         if unit.supplier:
             supplier_level = unit.supplier.level
-            if supplier_level == 2:
+            if supplier_level > 1:
                 unit.level = 2
             else:
                 unit.level = supplier_level + 1
@@ -44,16 +45,17 @@ class UnitCreateAPIView(generics.CreateAPIView):
 
 
 class UnitUpdateAPIView(generics.UpdateAPIView):
-    """Контроллер для обновления привычек"""
+    """Контроллер для обновления данных филиала"""
     queryset = Unit.objects.all()
     serializer_class = UnitSerializer
     permission_classes = [IsActive]
 
     def perform_update(self, serializer):
+        """Проверка на наличие поставщика, присваивание корректного уровня"""
         unit = serializer.save()
         if unit.supplier:
             supplier_level = unit.supplier.level
-            if supplier_level == 2:
+            if supplier_level > 1:
                 unit.level = 2
             unit.level = supplier_level + 1
 
@@ -63,7 +65,7 @@ class UnitUpdateAPIView(generics.UpdateAPIView):
 
 
 class UnitDestroyAPIView(generics.DestroyAPIView):
-    """Контроллер для удаления привычек"""
+    """Контроллер для удаления филиала"""
     queryset = Unit.objects.all()
     serializer_class = UnitSerializer
     permission_classes = [IsActive]
